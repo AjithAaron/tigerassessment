@@ -1,0 +1,61 @@
+.upload-header {
+    margin: 2rem auto;
+    width: 50rem;
+    max-width: 95%;
+}
+
+.upload-style {
+    justify-content: space-between;
+    margin: 2rem auto;
+    width: 60rem;
+}
+
+.search-fields {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.result-data {
+    margin: 2rem auto;
+    width: 60rem;
+    height: 50%;
+}
+
+.ant-table-wrapper {
+    width: 100%;
+}
+
+.ant-table-holidays,
+.ant-inner-table .ant-table-container {
+    background: #fafafa;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+}
+
+.ant-table-holidays .ant-table-tbody>tr>td,
+.ant-table-thead>tr>th,
+.ant-table-popover .ant-table-tbody>tr>td,
+.ant-table-thead>tr>th {
+    border: 1.5px solid #f0f0f0;
+    color: black;
+}
+
+.ant-tooltip-inner {
+    width: max-content;
+    border-radius: 5px;
+}
+
+.ant-input[disabled] {
+    color: #6f6d6d !important;
+    background-color: #cecbcb !important;
+}
+
+.ant-picker.ant-picker-disabled {
+    background:#cecbcb !important;
+}
+
+.ant-picker-input>input[disabled] {
+    color: #6f6d6d !important;
+}

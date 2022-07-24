@@ -1,0 +1,8 @@
+.Form {
+    display: flex;
+    padding: 16px !important;
+    margin-top: 16px !important;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px 0 gray;
+}
