@@ -137,7 +137,7 @@ const DataTable = ({ uplodedDataContent, dispatchUploadedContent, updateDataHand
             render: (text, row, i) => (
                 <Tooltip title={
                     <span>{'Delete'}</span>
-                } placement='top' key={'REMOVE'}> <Button type="primary" shape="circle" icon={<DeleteOutlined />}
+                } placement='top' key={'REMOVE'}> <Button type="danger" shape="circle" icon={<DeleteOutlined />}
                     onClick={() => deleteHandler(row)} disabled={row.isEdit}
                     />
                 </Tooltip>

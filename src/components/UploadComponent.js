@@ -184,6 +184,7 @@ const UploadComponent = (props) => {
         let currentData = [...state.uploadedItemList];
         if (type === 'remove_data') {
             currentData = currentData.filter((data) => data.key !== value.key);
+            setPreviousItemList(JSON.parse(JSON.stringify(currentData)));
             notification.success({ message: 'Data deleted successfully' });
         } else {
             currentData.forEach((data) => {
