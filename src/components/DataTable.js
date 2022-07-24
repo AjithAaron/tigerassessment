@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import moment from 'moment';
-import { Button, DatePicker, Input, message, Table, Tooltip, Modal } from 'antd';
+import { Button, DatePicker, Input, notification, Table, Tooltip, Modal } from 'antd';
 import { CheckOutlined, DeleteOutlined, EditOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
 import './UploadComponent.css';
@@ -9,43 +9,58 @@ import FormComponent from './HOC/FormComponent';
 
 const { confirm } = Modal;
 
-message.config({
-    // top: 10,
-    left:100,
-    maxCount: 1,
-    rtl: true
-});
+notification.config({ placement: 'bottomLeft', duration: 3 });
 
+/**
+* DataTable components are used for acheive table operation.
+* @param uplodedDataContent
+* @param dispatchUploadedContent
+* @param updateDataHandler callback function for pass data from child to parent
+* @param deleteDataHandler callback function for pass data from child to parent
+*/
 const DataTable = ({ uplodedDataContent, dispatchUploadedContent, updateDataHandler, deleteDataHandler }) => {
+
     const [singleEdit, setSingleEdit] = useState(false);
     const [selectedKeys, setSelectedKeys] = useState();
     const [currentPageNumber, setPageNumber] = useState(1);
     const selectedRowKeyForEdit = useRef();
     const pageSize = 7;
 
+    /**
+    * editHandler used to handle edit operations in table
+    * @param row
+    */
     const editHandler = (row) => {
         if (singleEdit === false) {
             selectedRowKeyForEdit.current = row.key;
-            dispatchUploadedContent({ type: 'UPDATE_DATA', value: [true, row] });
+            dispatchUploadedContent({ type: 'EDIT_DATA', value: [true, row] });
             setSingleEdit(true);
         } else {
             let index = uplodedDataContent.uploadedItemList.findIndex((data) => data.key === selectedRowKeyForEdit.current) + 1;
             let lastPageNumber = (index % pageSize !== 0) ? Math.floor(index / pageSize) + 1 : Math.floor(index / pageSize);
             setPageNumber(lastPageNumber);
             setSelectedKeys(selectedRowKeyForEdit.current);
-            message.warning('Please update one row at a time');
+            notification.warning({ message: 'Please update one row at a time' });
         }
     }
 
+    /**
+    * updateHandler used to handle update operations in table
+    * @param row
+    */
     const updateHandler = (row) => {
         setSelectedKeys();
         setSingleEdit(false);
         updateDataHandler(row);
     }
 
+    /**
+    * deleteHandler used to handle delete operations in table
+    * @param row
+    */
     const deleteHandler = (row) => {
         confirm({
-            title: 'Do you Want to delete this item?',
+            title: 'Do you want to delete this item?',
             icon: <ExclamationCircleOutlined />,
             okText: 'Yes',
             okType: 'danger',
@@ -56,6 +71,9 @@ const DataTable = ({ uplodedDataContent, dispatchUploadedContent, updateDataHand
         });
     }
 
+    /**
+    * gridColumns describe table column and column attributes
+    */
     const gridColumns = [
         {
             title: 'Store Id', dataIndex: 'store_id', key: 'store_id', align: 'center', width: '100px',
@@ -120,7 +138,7 @@ const DataTable = ({ uplodedDataContent, dispatchUploadedContent, updateDataHand
                 <Tooltip title={
                     <span>{'Delete'}</span>
                 } placement='top' key={'REMOVE'}> <Button type="primary" shape="circle" icon={<DeleteOutlined />}
-                    onClick={() => deleteHandler(row)}
+                    onClick={() => deleteHandler(row)} disabled={row.isEdit}
                     />
                 </Tooltip>
             )
